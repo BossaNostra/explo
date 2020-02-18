@@ -28,13 +28,49 @@ def date_parser(dates):
     return date
 
 
-def extract_municipality_hastags(df):
+def extract_municipality_hashtags(df):
+    
+    """
+    Modify input dataframe to include two new columns:
 
+        1. column containing the name of the municipality at which the tweet is directed
+        2. column containing all of the hashtags of the tweet in another column
+    
+    Args:
+        df (pandas dataframe): dataframe to be modified
+    
+    Returns:
+        pandas dataframe : returns modified dataframe with 'minucipality' and 'hashtag'column added
+             
     """
-    This function must return a dataframe with:
-    An added column of extracted hashtags from each tweet.
-    An added column of the municipality mentioned in each tweet 
-    """
+    
+    # initialise empty columns to be filled
+
+    df['minucipality'] = ''
+    df['hashtag'] = ''
+
+    for tweet_index in range(len(df['Tweets'])): # loop through every row in the tweet column
+
+      hashtags = [] #temp list to hold hashtags for the current tweet
+
+      for word in mun_dict: # loop through every word in mun_dict dictionary
+        if word in df['Tweets'][tweet_index]: 
+          df['minucipality'][tweet_index] = mun_dict[word] # add municipality name to 'municipality' column if it can be found in the dictionary
+        else:
+          df['minucipality'][tweet_index] = np.nan 
+      
+      for word2 in df['Tweets'][tweet_index].lower().split(): # loop through every word in current tweet in 'Tweets' column
+        if word2.startswith('#') == True: # add hashtags to temp list
+          hashtags.append(word2)
+        else:
+          pass
+      
+      df['hashtag'][tweet_index] = hashtags # add temp hashtag list to 'hashtag' column
+      
+      if len(hashtags) == 0:
+        df['hashtag'][tweet_index] = np.nan
+        
+    return df
 
 
 
