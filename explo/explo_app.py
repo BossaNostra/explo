@@ -17,7 +17,6 @@ def metric_dict(items):
     > Variance
 
     """
-#I'm testing the shit out of this
 
 def date_parser(dates):
 
@@ -61,8 +60,7 @@ def word_splitter(df):
     This function takes a dataframe and returns a new dataframe with 
     a new column of individual words
     """
-    df['Split Tweets'] = [tweet.split(' ') for tweet in df['Tweets']]
-    return df
+    
 
 
 def five_num_summary(items):
