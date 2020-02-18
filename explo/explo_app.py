@@ -17,7 +17,7 @@ def metric_dict(items):
     > Variance
 
     """
-
+#I'm testing the shit out of this
 
 def date_parser(dates):
 
