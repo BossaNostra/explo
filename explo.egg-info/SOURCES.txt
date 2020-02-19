@@ -1,9 +1,0 @@
-README.md
-setup.py
-explo/__init__.py
-explo/explo_app.py
-explo.egg-info/PKG-INFO
-explo.egg-info/SOURCES.txt
-explo.egg-info/dependency_links.txt
-explo.egg-info/requires.txt
-explo.egg-info/top_level.txt
