@@ -1,12 +1,7 @@
+from EXPLO import explo_app
+
 import pandas as pd
 import numpy as np
-from explo import explo_app
-
-"""
-To ensure that explo_app works as intended
-"""
-
-########### TEST DATA: ELECTRIFICATION BY PROVINCE (ebp) DATA ##################
 
 ebp_url = 'https://raw.githubusercontent.com/Explore-AI/Public-Data/master/Data/electrification_by_province.csv'
 ebp_df = pd.read_csv(ebp_url)
@@ -14,21 +9,15 @@ ebp_df = pd.read_csv(ebp_url)
 for col, row in ebp_df.iloc[:,1:].iteritems():
     ebp_df[col] = ebp_df[col].str.replace(',','').astype(int)
 
-
-########### TWITTER DATA ##################
-
 twitter_url = 'https://raw.githubusercontent.com/Explore-AI/Public-Data/master/Data/twitter_nov_2019.csv'
 twitter_df = pd.read_csv(twitter_url)
 
 
-######### INPUT VARIABLES ##############
-
-
 # gauteng ebp data as a list
-gauteng = list(ebp_df['Gauteng'].astype(float))
+gauteng = ebp_df['Gauteng'].astype(float).to_list()
 
 # dates for twitter tweets
-dates = list(twitter_df['Date'])
+dates = twitter_df['Date'].to_list()
 
 # dictionary mapping official municipality twitter handles to the municipality name
 mun_dict = {
@@ -76,13 +65,68 @@ stop_words_dict = {
     ]
 }
 
+def dictionary_of_metrics(items):
+    """
+    make sure dictionary_of_metrics works correctly
+    """
 
-################ TEST CASES: Date Parser Function ##################
+    assert explo_app.dictionary_of_metrics(gauteng) == {'mean': 26244.42,
+                                   'median': 24403.5,
+                                   'var': 108160153.17,
+                                   'std': 10400.01,
+                                   'min': 8842.0,
+                                   'max': 39660.0} , 'incorrect'
 
-assert explo_app.date_parser(dates[:3]) == ['2019-11-29', '2019-11-29', '2019-11-29'], 'incorrect'
-assert explo_app.date_parser(dates[-3:]) == ['2019-11-20', '2019-11-20', '2019-11-20'], 'incorrect'
+
+def five_num_summary(items):
+    """
+    make sure five_num_summary works correctly
+    """
+
+    assert explo_app.five_num_summary(gauteng)=={
+    'max': 39660.0,
+    'median': 24403.5,
+    'min': 8842.0,
+    'q1': 18653.0,
+    'q3': 36372.0}, 'incorrect' 
 
 
-################ TEST CASES: Number of Tweets per Day Function ##################
+def date_parser(dates):
+    """
+    make sure date_parser correctly
+    """
 
-assert explo_app.number_of_tweets_per_day(twitter_df.copy()), 'incorrect'
+    assert explo_app.date_parser(dates[:3]) == ['2019-11-29', '2019-11-29', '2019-11-29'], 'incorrect'
+
+
+
+def extract_municipality_hashtags(df):
+    """
+    make sure extract_municipality_hashtags correctly
+    """
+
+    assert explo_app.extract_municipality_hashtags(twitter_df.copy()).loc[4, 'municipality']==nan , 'incorrect'
+    assert explo_app.extract_municipality_hashtags(twitter_df.copy()).loc[4, 'hashtags']==['#eskomfreestate', '#mediastatement'] , 'incorrect'
+
+
+
+def number_of_tweets_per_day(df):
+    """
+    make sure number_of_tweets_per_day correctly
+    """
+
+    assert explo_app.number_of_tweets_per_day(twitter_df.copy()).loc['2019-11-20','Tweets']==18, 'incorrect'
+
+
+def word_splitter(df):
+    """
+    make sure word_splitter correctly
+    """
+    assert explo_app.word_splitter(twitter_df.copy()).loc[0,'Split Tweets']== ['@bongadlulane','please','send','an','email','to','mediadesk@eskom.co.za'] , 'incorrect'
+
+def stop_words_remover(df):
+    """
+    make sure stop_words_remover correctly
+    """
+
+    assert explo_app.stop_words_remover(twitter_df.copy()).loc[0, "Without Stop Words"] == ['@bongadlulane', 'send', 'email', 'mediadesk@eskom.co.za']
