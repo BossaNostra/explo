@@ -1,6 +1,6 @@
 # Project Title: Explo
 
-This package was created as part of a group project @Explore Data Science Academy 2020. The module `explo_app` contains python functions for exploratory data analysis. The doc strings in explo_app can be checked for more detail on each specific function.
+This package was created as part of a group project @Explore Data Science Academy 2020. The module `explo_app` located in the explo folder contains python functions for exploratory data analysis. The doc strings in explo_app can be checked for more detail on each specific function.
 
 ## Getting Started
 
