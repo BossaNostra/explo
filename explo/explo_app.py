@@ -206,11 +206,33 @@ def stop_words_remover(df):
 
 
 def word_splitter(df):
+    
+    """
+    This Function takes in a dataframe of tweets, creates a copy of the Dataframe, creates a new column,
+    and transforms the tweets within, in order to be more readable. 
 
+    Parameters
+    -----
+    word_splitter = df.copy(deep=True): creates the copy of the dataframe.
+
+    word_splitter['Split Tweets']: The new column that will be added
+
+    df['Tweets'].apply : Is the existing column we wish to manipulate.
+
+    lambda Tweets: Tweets.lower().split(): Is the actual function that performs the transformation we want
+    by spilting the tweets into words, and making them lowercase.
+    ------
+    Returns
+    ------
+    The new(copied) dataframe with the tweets that have been transformed to be spilt and lowercase.
     """
-    This function takes a dataframe and returns a new dataframe with 
-    a new column of individual words
-    """
+    
+    word_splitter = df.copy(deep=True)
+    
+    # spilts the sentences in "tweets" to words and makes all words lower case
+    word_splitter['Split Tweets']= df['Tweets'].apply(lambda Tweets: Tweets.lower().split())
+    
+    return word_splitter
     
 
 
