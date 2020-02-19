@@ -248,7 +248,22 @@ def word_splitter(df):
 
 
 def five_num_summary(items):
-
+  """
+    function calculates the median, and gets minimim and maximum the first percentile and second percentile of the data that has been given and has been rounded off to 2 decimal.
+    
+    Parameters
+    ----------
+    a: items
+        List of integers
+    
+    Returns
+    -------
+    c: Dictionary
+        Returns a dictionary of the median,minimim value, maximum value, first percentile and second percentile of the inputted list.
     """
-    This function return a dictinary of the five number summary.
-    """
+  dic = { 'max': round(np.max(items),2),
+             'min': round(np.min(items),2),
+             'median': round(np.median(items),2),
+              'q1': round(np.percentile(items, 25),2),
+               'q3': round(np.percentile(items, 75),2)}
+  return dic
