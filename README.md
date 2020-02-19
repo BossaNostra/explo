@@ -11,7 +11,7 @@ Install the package to your local machine. See installing instructions below.
 ## Prerequisites
 
 You will need the following python packages:
- > Pandas
+ > Pandas, 
  > Numpy
 
 
@@ -28,10 +28,10 @@ To update this package from Github
 
 ## Authors
 
-Jonathan Dankers
-Bongane Zitha
-Khanyisa Galela
-Devin Smythe
+Jonathan Dankers, 
+Bongane Zitha, 
+Khanyisa Galela, 
+Devin Smythe, 
 Juandre Liebenberg
 
 ## License
