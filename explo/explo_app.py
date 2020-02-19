@@ -21,9 +21,16 @@ def metric_dict(items):
 def date_parser(dates):
 
     """
-    This functions takes a date and converts it into a certain format.
-    """
+    Takes an input Pandas DataFrame with a datetime column of the format(yyyy-mm-dd hh:mm:ss) 
+    and modifies it to return just the date in the format (yyyy-mm-dd)
     
+    Args:
+        df (pandas dataframe): dataframe to be modified
+    
+    Returns:
+        pandas dataframe : with the modified date column
+    """
+    #Reset the date column with a list comprehension 
     date = [datetime.split(' ')[0] for datetime in dates]
     return date
 
@@ -41,8 +48,20 @@ def extract_municipality_hastags(df):
 def number_of_tweets_per_day(df):
     
     """
-    This function returns a number of tweets per day.
+    
+    Takes an input Pandas DataFrame with a datetime and Tweet columns and returns a dataframe with:
+
+        1. Date column
+        2. Tweets count ordered by date
+    
+    Args:
+        df (pandas dataframe): dataframe to be modified
+    
+    Returns:
+        pandas dataframe : with the modified date column and tweets count ordered by date
+        
     """
+    
     df['Date'] = [entry.split(' ')[0] for entry in df['Date']]
     return df.groupby('Date').count()
 
