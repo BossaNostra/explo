@@ -156,9 +156,53 @@ def number_of_tweets_per_day(df):
 
 def stop_words_remover(df):
 
-    """
-    This function returns a dataframe without stop words
-    """
+  """
+   removes english stop words from a tweet as defined by a dictionary stop_words_dict
+    
+    Parameters
+    ----------
+
+    df: pandas dataframe
+    
+    Returns
+    -------
+    df: pandas dataframe
+        Modified dataframe with new column 'Without Stop Words' that has lowercased split tweets with all stop words removed
+
+    Examples
+
+    -------
+        >> stop_words_remover(twitter_df.copy()).loc[0, "Without Stop Words"]
+        ['@bongadlulane', 'send', 'email', 'mediadesk@eskom.co.za']
+        1        
+        >> stop_words_remover(twitter_df.copy()).loc[100, "Without Stop Words"]
+        ['#eskomnorthwest', '#mediastatement', ':', 'notice', 'supply', 'interruption', 'lichtenburg', 'area', 'https://t.co/7hfwvxllit']
+       
+  """
+
+  stop_word_list=list(stop_words_dict.values())[0] # created a list from 'stop words' key of stop_word_dict
+
+  remover_df=df.copy() # duplicated DataFrame df as remover_df
+  
+  remover_df['Without Stop Words']=remover_df['Tweets'].apply(lambda x: x.lower().split()) # generated new column 'Without Stop Words' from column 'Tweets'
+
+  #for loop to interate through every row of column 'Without Stop Words'
+  for entry in remover_df['Without Stop Words']:
+
+    # for loop to iterate though every list element on row specified by entry
+    for element in entry:
+
+      retry=entry.count(element) #counts number of stop words in row to determine condition for while loop
+
+      while retry>0: 
+        
+        if element in stop_word_list: # for every stop word in row, the element must be removed from the row
+          entry.remove(element)
+          retry=retry-1
+        else:
+          break # if no stop word is found, break loop and continue to next row
+
+  return remover_df
 
 
 def word_splitter(df):
