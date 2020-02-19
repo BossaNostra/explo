@@ -128,29 +128,29 @@ def extract_municipality_hashtags(df):
     
     # initialise empty columns to be filled
 
-    df['minucipality'] = ''
-    df['hashtag'] = ''
+    df['municipality'] = ''
+    df['hashtags'] = ''
 
     for tweet_index in range(len(df['Tweets'])): # loop through every row in the tweet column
 
-      hashtags = [] #temp list to hold hashtags for the current tweet
+        hashtags = [] #temp list to hold hashtags for the current tweet
 
-      for word in mun_dict: # loop through every word in mun_dict dictionary
-        if word in df['Tweets'][tweet_index]: 
-          df['minucipality'][tweet_index] = mun_dict[word] # add municipality name to 'municipality' column if it can be found in the dictionary
-        else:
-          df['minucipality'][tweet_index] = np.nan 
+        for word in mun_dict: # loop through every word in mun_dict dictionary
+            if word in df['Tweets'][tweet_index]:
+                df['municipality'][tweet_index] = mun_dict[word] # add municipality name to 'municipality' column if it can be found in the dictionary
+            else:
+                df['municipality'][tweet_index] = np.nan 
       
-      for word2 in df['Tweets'][tweet_index].lower().split(): # loop through every word in current tweet in 'Tweets' column
-        if word2.startswith('#') == True: # add hashtags to temp list
-          hashtags.append(word2)
-        else:
-          pass
+        for word2 in df['Tweets'][tweet_index].lower().split(): # loop through every word in current tweet in 'Tweets' column
+            if word2.startswith('#') == True: # add hashtags to temp list
+                hashtags.append(word2)
+            else:
+                pass
       
-      df['hashtag'][tweet_index] = hashtags # add temp hashtag list to 'hashtag' column
+        df['hashtags'][tweet_index] = hashtags # add temp hashtag list to 'hashtag' column
       
-      if len(hashtags) == 0:
-        df['hashtag'][tweet_index] = np.nan
+        if len(hashtags) == 0:
+            df['hashtags'][tweet_index] = np.nan
         
     return df
 
@@ -166,9 +166,8 @@ def number_of_tweets_per_day(df):
 
 
 def stop_words_remover(df):
-
-  """
-   removes english stop words from a tweet as defined by a dictionary stop_words_dict
+    """
+    Removes english stop words from a tweet as defined by a dictionary stop_words_dict
     
     Parameters
     ----------
@@ -191,29 +190,29 @@ def stop_words_remover(df):
        
   """
 
-  stop_word_list=list(stop_words_dict.values())[0] # created a list from 'stop words' key of stop_word_dict
+    stop_word_list=list(stop_words_dict.values())[0] # created a list from 'stop words' key of stop_word_dict
 
-  remover_df=df.copy() # duplicated DataFrame df as remover_df
+    remover_df=df.copy() # duplicated DataFrame df as remover_df
   
-  remover_df['Without Stop Words']=remover_df['Tweets'].apply(lambda x: x.lower().split()) # generated new column 'Without Stop Words' from column 'Tweets'
+    remover_df['Without Stop Words']=remover_df['Tweets'].apply(lambda x: x.lower().split()) # generated new column 'Without Stop Words' from column 'Tweets'
 
   #for loop to interate through every row of column 'Without Stop Words'
-  for entry in remover_df['Without Stop Words']:
+    for entry in remover_df['Without Stop Words']:
 
     # for loop to iterate though every list element on row specified by entry
-    for element in entry:
+        for element in entry:
 
-      retry=entry.count(element) #counts number of stop words in row to determine condition for while loop
+            retry=entry.count(element) #counts number of stop words in row to determine condition for while loop
 
-      while retry>0: 
+            while retry>0: 
         
-        if element in stop_word_list: # for every stop word in row, the element must be removed from the row
-          entry.remove(element)
-          retry=retry-1
-        else:
-          break # if no stop word is found, break loop and continue to next row
+                if element in stop_word_list: # for every stop word in row, the element must be removed from the row
+                    entry.remove(element)
+                    retry=retry-1
+                else:
+                    break # if no stop word is found, break loop and continue to next row
 
-  return remover_df
+    return remover_df
 
 
 def word_splitter(df):
@@ -248,7 +247,7 @@ def word_splitter(df):
 
 
 def five_num_summary(items):
-  """
+    """
     function calculates the median, and gets minimim and maximum the first percentile and second percentile of the data that has been given and has been rounded off to 2 decimal.
     
     Parameters
@@ -261,9 +260,9 @@ def five_num_summary(items):
     c: Dictionary
         Returns a dictionary of the median,minimim value, maximum value, first percentile and second percentile of the inputted list.
     """
-  dic = { 'max': round(np.max(items),2),
+    dic = { 'max': round(np.max(items),2),
              'min': round(np.min(items),2),
              'median': round(np.median(items),2),
               'q1': round(np.percentile(items, 25),2),
                'q3': round(np.percentile(items, 75),2)}
-  return dic
+    return dic
