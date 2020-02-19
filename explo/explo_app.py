@@ -74,20 +74,31 @@ stop_words_dict = {
 Functions
 '''
 
-def metric_dict(items):
+def dictionary_of_metrics(items):
 
     """
-    Write a function that calculates metrics from Eskom Data and outputs the metrics as a dictionary. 
-    These metrics must include:
-        
-    > Mean
-    > Median
-    > Maximum
-    > Minimum
-    > Standard Deviation
-    > Variance
-
+    function calculates the mean,median,variance,standard deviation and also gets minimim and maximum of the data that has been given and has been rounded off to 2 decimal.
+    
+    Parameters
+    ----------
+    a: items
+        List of integers
+    
+    Returns
+    -------
+    c: Dictionary
+        Returns a dictionary of the mean,median,unbiased variance,unbiased standard deviation,minimim value, and maximum value of the inputted list.
     """
+    
+    dic = {'mean': round(np.mean(items),2), 
+            'median': round(np.median(items),2), 
+            'var': round(np.var(items, ddof=1),2),
+            'std': round(np.std(items, ddof=1),2),
+            'min': round(np.min(items),2),
+            'max': round(np.max(items),2)
+           }
+    
+    return dic
 
 def date_parser(dates):
 
